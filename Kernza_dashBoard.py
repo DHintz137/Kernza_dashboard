@@ -32,24 +32,24 @@ app.layout = html.Div([
                 id='scale_a_slider',
                 min=0,
                 max=0.9,
-                step=0.1,
+                step=0.05,
                 value=0.2,
-                marks={i: {'label': str(i), 'style': {'fontSize': 18}} for i in range(0, 2)},
+                marks={i/10: {'label': str(i/10), 'style': {'fontSize': 18}} for i in range(0, 10)},
             ),
             html.Div(id='scale_a_value', style={'fontSize': 18, 'marginTop': '10px'})
-        ], style={'padding': '10px', 'width': '50%', 'display': 'inline-block'}),
+        ], style={'width': '60%', 'margin': '0 auto'}),
         html.Div([
             html.Label('De-Hulling Conversion Loss:', style={'fontSize': 18, 'marginRight': '10px'}),
             dcc.Slider(
                 id='scale_b_slider',
                 min=0,
                 max=0.9,
-                step=0.1,
+                step=0.05,
                 value=0.2,
-                marks={i: {'label': str(i), 'style': {'fontSize': 18}} for i in range(0, 2)},
+                marks={i/10: {'label': str(i/10), 'style': {'fontSize': 18}} for i in range(0, 10)},
             ),
             html.Div(id='scale_b_value', style={'fontSize': 18, 'marginTop': '10px'})
-        ], style={'padding': '10px', 'width': '50%', 'display': 'inline-block'})
+        ], style={'width': '60%', 'margin': '0 auto'})
     ]),
     dcc.Graph(id='sunburst_chart', style={'height': '90vh'})
 ], style={'height': '100vh', 'display': 'flex', 'flexDirection': 'column'})
@@ -266,7 +266,19 @@ def update_content(DH_Loss, CL_Loss):
         )
     )
     fig.update_layout(
-        margin=dict(t=50, l=0, r=0, b=0)
+        title={
+            'text': "Kernza Inventory as of December 2023",
+            'y':0.98,
+            'x':0.5,
+            'xanchor': 'center',
+            'yanchor': 'top',
+            'font': {'size': 24, 'family': 'Arial, sans-serif'}
+        },
+        margin=dict(t=45, l=0, r=0, b=0),
+        sunburstcolorway=[Flax(1), Olive(1), Aqua(1), Red(1), Purple(1)],  # Custom colorway
+        extendpiecolors=True,
+        paper_bgcolor='rgba(255, 255, 255, 0.8)',  # Semi-transparent background
+        plot_bgcolor='rgba(255, 255, 255, 0.9)'    # Semi-transparent plot background
     )
     # Update slider values
     scale_a_text = f"Current value: {DH_Loss}"
